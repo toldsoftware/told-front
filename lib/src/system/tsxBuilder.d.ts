@@ -13,7 +13,6 @@ export interface TextElementInstance extends ElementInstance {
     setText(newText: string): void;
 }
 export interface ElementFactory {
-    createEmptyElement(name: string, attributes: ValueAttributes): ElementInstance;
     createTextElement(name: string, attributes: ValueAttributes, text: string): TextElementInstance;
     createContainerElement(name: string, attributes: ValueAttributes, children: ElementInstance[]): ContainerElementInstance;
 }

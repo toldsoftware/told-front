@@ -23,7 +23,7 @@ export function toState<T extends StateData>(stateData: T, path: string = null, 
         let kPath = path + '.' + k;
         let kPathValue = pathValue[k];
 
-        let kObj = new StatePath(stateData, kPath, kPathValue) as any;
+        let kObj = new StatePath(k, kPathValue, stateData, kPath) as any;
         if (typeof kPathValue === 'object') {
             let childValues = toState(stateData, kPath, kPathValue);
             for (let c in childValues) {
@@ -38,7 +38,20 @@ export function toState<T extends StateData>(stateData: T, path: string = null, 
 }
 
 export class StatePath<T> extends SimpleSubject<T> {
-    constructor(private state: T, private path: string, initialValue: T) {
-        super(initialValue);
+    constructor(private _key: string, _initialValue: T, private _originalState: any, private _fullPath: string) {
+        super(_initialValue);
+    }
+
+    emit(newValue: T) {
+        this.setValue(newValue);
+
+        // Emit new values into all children
+        let keys = Object.getOwnPropertyNames(this).filter(x => !x.match(/^_/));
+        console.log(`StatePath.emit: keys="${keys}"`); // , newValue="${newValue}", this="${this}""`);
+
+        for (let k of keys) {
+            console.log(`StatePath.emit: [key]="${k}"`);
+            (this as any)[k].emit((newValue as any)[k]);
+        }
     }
 }

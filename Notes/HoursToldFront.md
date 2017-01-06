@@ -23,6 +23,10 @@
 
 - Change to ElementFactory for Platforms
 
+## 14:54-15:15
+
+- Emit down tree
+
 # Tasks
 
 - tsxBuilder convert statePaths to elements 
