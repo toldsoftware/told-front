@@ -9,6 +9,11 @@
         "sourceMap": true,
         "types": [
             "jasmine"
+        ],
+        "jsx": "react",
+        "reactNamespace": "TsxBuilder",
+        "lib": [
+            "dom", "es5"
         ]
     },
     "exclude": [
