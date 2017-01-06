@@ -38,3 +38,46 @@ describe('label with nested state', () => {
         expectHtml(label, '<span>NEW NESTED INNER2</span>');
     });
 });
+
+
+describe('label with calculation content', () => {
+    let stateData = { count: 0 };
+    let state = toState(stateData);
+    let label = <label>{() => state.count.value + (state.count.value === 1 ? ' item left' : ' items left')}</label>;
+
+    it('should show correct suffix at 0', () => {
+        expectHtml(label, '<span>0 items left</span>');
+    });
+
+    it('should show correct suffix at 1', () => {
+        state.count.emit(1);
+        expectHtml(label, '<span>1 item left</span>');
+    });
+
+    it('should show correct suffix at 2', () => {
+        state.count.emit(2);
+        expectHtml(label, '<span>2 items left</span>');
+    });
+
+});
+
+describe('label with calculation attribute', () => {
+    let stateData = { count: 0 };
+    let state = toState(stateData);
+    let label = <label suffix={() => (state.count.value === 1 ? ' item left' : ' items left')}>{state.count}</label>;
+
+    it('should show correct suffix at 0', () => {
+        expectHtml(label, '<span>0 items left</span>');
+    });
+
+    it('should show correct suffix at 1', () => {
+        state.count.emit(1);
+        expectHtml(label, '<span>1 item left</span>');
+    });
+
+    it('should show correct suffix at 2', () => {
+        state.count.emit(2);
+        expectHtml(label, '<span>2 items left</span>');
+    });
+
+});

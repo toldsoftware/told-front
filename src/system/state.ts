@@ -7,29 +7,53 @@ export interface StateData {
 import { StateData } from './state';
 
 export type State<T> = {
-[P in keyof T]: State<T[P]> & Subject<T[P]>;
+[P in keyof T]: State<T[P]> & StatePath<T[P]>;
 };
 
-export function toState<T extends StateData>(stateData: T, path: string = null, pathValue: any = null): State<T> {
+export type SpySubscriber = (statePath: StatePathBase) => void;
+
+export class StateSpy {
+    static Instance: StateSpy = new StateSpy();
+    private constructor() { }
+
+    subscribers_getValue: SpySubscriber[] = [];
+    subscribe_getValue(subscriber: SpySubscriber) {
+        return this.subscribers_getValue.push(subscriber) - 1;
+    }
+    unsubscribe_getValue(iSubscriber: number) {
+        this.subscribers_getValue[iSubscriber] = null;
+    }
+    notify_getValue(statePath: StatePathBase) {
+        for (let x of this.subscribers_getValue) {
+            if (x) {
+                x(statePath);
+            }
+        }
+    }
+};
+
+export function toState<T extends StateData>(stateData: T): State<T> {
+    return toStateInner(stateData, '', stateData);
+}
+
+function toStateInner<T extends StateData>(stateData: T, path: string, pathValue: any): State<T> {
     let s: State<T> = {} as any;
 
-    if (!path) {
-        pathValue = stateData;
-    }
-
-    path = path || '';
-
     for (let k of Object.getOwnPropertyNames(pathValue)) {
-        let kPath = path + '.' + k;
+        let kFullPath = path + '.' + k;
         let kPathValue = pathValue[k];
 
-        let kObj = new StatePath(k, kPathValue, stateData, kPath) as any;
+        let statePath = new StatePath(k, kPathValue, kFullPath);
+        // statePath.subscribe(x => spy(statePath, x));
+
+        let kObj = statePath as any; // , stateData, kPath) as any;
         if (typeof kPathValue === 'object') {
-            let childValues = toState(stateData, kPath, kPathValue);
+            let childValues = toStateInner(stateData, kFullPath, kPathValue);
             for (let c in childValues) {
                 kObj[c] = childValues[c];
             }
         }
+
 
         s[k] = kObj;
     }
@@ -37,8 +61,13 @@ export function toState<T extends StateData>(stateData: T, path: string = null, 
     return s;
 }
 
-export class StatePath<T> extends SimpleSubject<T> {
-    constructor(private _key: string, _initialValue: T, private _originalState: any, private _fullPath: string) {
+export interface StatePathBase {
+    _fullPath: string;
+    subscribe(subscriber: Subscriber<any>): void;
+}
+
+export class StatePath<T> extends SimpleSubject<T> implements StatePathBase {
+    constructor(private _key: string, _initialValue: T, public _fullPath: string) {// , private _originalState: any) {
         super(_initialValue);
     }
 
@@ -53,5 +82,10 @@ export class StatePath<T> extends SimpleSubject<T> {
             console.log(`StatePath.emit: [key]="${k}"`);
             (this as any)[k].emit((newValue as any)[k]);
         }
+    }
+
+    get value() {
+        StateSpy.Instance.notify_getValue(this);
+        return this._value;
     }
 }

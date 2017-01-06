@@ -7,6 +7,7 @@ export class SpanHtmlElementInstance extends HtmlTextElementInstance<HTMLSpanEle
         let dom = document.createElement('span');
         this.domElement = dom;
         this.update();
+        // console.log('SpanHtmlElementInstance CREATED', this.domElement.innerText, this.attributes, this.text);
     }
 
     setAttributes(attributes: ValueAttributes): void { this.attributes = attributes; this.update(); }
@@ -16,10 +17,11 @@ export class SpanHtmlElementInstance extends HtmlTextElementInstance<HTMLSpanEle
         let text = this.text;
         let attributes = this.attributes;
         if (attributes) {
-            if (text && attributes['prefix']) { text = attributes['prefix'] + text; }
-            if (text && attributes['suffix']) { text = text + attributes['suffix']; }
+            if (attributes['prefix']) { text = attributes['prefix'] + text; }
+            if (attributes['suffix']) { text = text + attributes['suffix']; }
         }
 
         this.domElement.innerText = text;
+        // console.log('SpanHtmlElementInstance UPDATED', this.domElement.innerText, this.attributes, this.text);
     }
 }

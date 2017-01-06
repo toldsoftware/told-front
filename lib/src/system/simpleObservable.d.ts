@@ -1,8 +1,7 @@
 export declare class SimpleObservable<T> {
     private _history;
     readonly history: T[];
-    private _value;
-    readonly currentValue: T;
+    protected _value: T;
     private _subscribers;
     constructor(initialValue: T);
     protected setValue(newValue: T): void;

@@ -3,8 +3,8 @@ export class SimpleObservable<T> {
     private _history: T[] = [];
     public get history() { return this._history.map(x => x); }
 
-    private _value: T;
-    public get currentValue() { return this._value; }
+    protected _value: T;
+    // public get currentValue() { return this._value; }
 
     private _subscribers: Subscriber<T>[] = [];
 

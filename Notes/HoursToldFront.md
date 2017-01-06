@@ -27,6 +27,10 @@
 
 - Emit down tree
 
+## 15:16-16:47
+
+- Support Calculations with Auto Subscription
+
 # Tasks
 
 - tsxBuilder convert statePaths to elements 
