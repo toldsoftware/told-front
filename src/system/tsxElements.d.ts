@@ -1,7 +1,3 @@
-declare interface Observable<T> {
-    subscribe(callback: (t: T) => void): void;
-}
-
 type Value<T> = T | (() => T) | Observable<T>;
 
 declare class TsxBuilder { }

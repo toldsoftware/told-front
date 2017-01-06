@@ -1,4 +1,4 @@
-import { TsxBuilder, ElementResult, Attributes } from './../../tsxBuilder';
+import { TsxBuilder, ElementResult, Attributes } from './../../system';
 import { createDiv } from './elements/div';
 import { createSpan } from './elements/span';
 

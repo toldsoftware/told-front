@@ -13,3 +13,7 @@
 ## 7:30-9:43
 
 - Define State Type
+
+## 10:15-11:12
+
+- Convert StateData to State 

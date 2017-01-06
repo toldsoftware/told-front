@@ -1,4 +1,4 @@
-import { ElementResult, Attributes } from './../../tsxBuilder';
+import { ElementResult, Attributes } from './../../system';
 export { Attributes };
 export declare class HtmlElementResultBase implements ElementResult {
     domElement: HTMLElement;

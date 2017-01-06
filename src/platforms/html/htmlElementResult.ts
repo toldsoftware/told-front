@@ -1,4 +1,4 @@
-import { ElementResult, Attributes } from './../../tsxBuilder';
+import { ElementResult, Attributes } from './../../system';
 
 export { Attributes };
 

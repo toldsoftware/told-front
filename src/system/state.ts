@@ -1,31 +1,44 @@
-import { Subscriber } from './observable';
-
 export interface StateData {
     [name: string]: StateData | string | boolean | number;
 }
 
 import { StateData } from './state';
 
-// export interface StatePath {
-//     stateData: any;
-//     statePath: string;
-//     [key: string]: StatePath;
-// }
-
 export type State<T> = {
-[P in keyof T]: State<T[P]> & ({ subscribe: (subscriber: Subscriber<T[P]>) => void; emit: (newValue: T[P]) => void });
+[P in keyof T]: State<T[P]> & Subject<T[P]>;
 };
 
-export function toState<T extends StateData>(stateData: T): State<T> {
+export function toState<T extends StateData>(stateData: T, path: string = null, pathObject: any = null): State<T> {
     let s: State<T> = {} as any;
 
-    for (let k in stateData) {
-        // if (typeof stateData[k] === 'Object') {
-        //     s[k] = new Observable(toState(stateData[k] as any));
-        // } else {
-        //     s[k] = new Observable(stateData[k]);
-        // }
+    if (!path) {
+        pathObject = stateData;
+    }
+
+    path = path || '';
+
+    for (let k of Object.getOwnPropertyNames(pathObject)) {
+        let kPath = path + '.' + k;
+        let kPathObject = pathObject[k];
+        let children: any = {};
+        if (typeof kPathObject === 'object') {
+            children = toState(stateData, kPath, kPathObject);
+        }
+
+        s[k] = { ...children, ...new StatePath(stateData, kPath) };
     }
 
     return s;
+}
+
+export class StatePath<T> implements Subject<T> {
+    constructor(private state: T, private path: string) {
+    }
+
+    subscribe(subscriber: Subscriber<T>): void {
+        // TODO:
+    }
+    emit(newValue: T): void {
+        // TODO:
+    }
 }

@@ -1,4 +1,4 @@
-import { TsxBuilder, TsxBuilderProvider, ElementResult } from './../../src/tsxBuilder';
+import { TsxBuilder, TsxBuilderProvider, ElementResult } from './../../src';
 import { HtmlTsxBuilder } from './../../src/platforms/html/htmlTsxBuilder';
 import { HtmlElementResultBase } from './../../src/platforms/html/htmlElementResult';
 

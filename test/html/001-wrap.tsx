@@ -1,4 +1,4 @@
-import { TsxBuilder } from './../../src/tsxBuilder';
+import { TsxBuilder } from './../../src';
 import { initPlatform, expectHtml } from './0-helpers';
 
 initPlatform();

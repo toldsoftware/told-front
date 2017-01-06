@@ -3,6 +3,13 @@ export interface StateData {
 }
 import { StateData } from './state';
 export declare type State<T> = {
-    [P in keyof T]: State<T[P]>;
+    [P in keyof T]: State<T[P]> & Subject<T[P]>;
 };
-export declare function toState<T extends StateData>(stateData: T): State<T>;
+export declare function toState<T extends StateData>(stateData: T, path?: string, pathObject?: any): State<T>;
+export declare class StatePath<T> implements Subject<T> {
+    private state;
+    private path;
+    constructor(state: T, path: string);
+    subscribe(subscriber: Subscriber<T>): void;
+    emit(newValue: T): void;
+}

@@ -1,5 +1,3 @@
-export type Subscriber<T> = (value: T, oldValue: T) => void;
-
 export class Observable<T> {
 
     private _history: T[] = [];
@@ -34,4 +32,13 @@ export class Observable<T> {
     public unsubscribe(iSubscriber: number) {
         this._subscribers[iSubscriber] = null;
     }
+}
+
+export class Subject<T> extends Observable<T>{
+    constructor(initialValue: T) {
+        super(initialValue);
+    }
+
+    public set value(t: T) { this.setValue(t); }
+    public emit(t: T) { this.setValue(t); }
 }
