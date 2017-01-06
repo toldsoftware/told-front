@@ -23,18 +23,22 @@ declare namespace JSX {
     }
 
     interface IntrinsicElements {
+        // Containers
         wrap: ContainerElement;
         panel: ContainerElement;
         header: ContainerElement;
         footer: ContainerElement;
         stack: ContainerElement;
         shelf: ContainerElement;
+        spacer: Element;
 
+        // Display
         heading: LabelElement;
         label: LabelElement;
+
+        // Inputs
         textbox: TextElement;
         checkbox: LabelElement;
         button: LabelElement;
-        spacer: Element;
     }
 }
