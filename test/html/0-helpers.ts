@@ -1,19 +1,19 @@
-import { TsxBuilder, TsxBuilderProvider, ElementResult } from './../../src';
-import { HtmlTsxBuilder } from './../../src/platforms/html/htmlTsxBuilder';
-import { HtmlElementResultBase } from './../../src/platforms/html/htmlElementResult';
+import { TsxBuilder, TsxElement, ElementFactory, ElementInstance } from './../../src';
+import { HtmlElementFactory } from './../../src/platforms/html/htmlElementFactory';
+import { HtmlElementInstanceBase } from './../../src/platforms/html/htmlElementInstance';
 
-let provider: HtmlTsxBuilder;
+let factory: ElementFactory;
 export function initPlatform() {
-    TsxBuilder.provider = provider = provider || new HtmlTsxBuilder();
+    TsxBuilder.factory = factory = factory || new HtmlElementFactory();
 }
 
-export function toHtml(element: ElementResult): string {
-    return (element as HtmlElementResultBase).domElement.outerHTML;
+export function toHtml(element: JSX.Element): string {
+    return ((element as TsxElement).elementInstance as HtmlElementInstanceBase).domElement.outerHTML;
 }
 
-export function expectHtml(element: ElementResult, expected: string) {
+export function expectHtml(element: JSX.Element, expected: string) {
     let actual = toHtml(element);
     let normExpected = expected.replace(/\s+/g, ' ');
     let normActual = actual.replace(/\s+/g, ' ');
-    expect(normActual).toBe(normExpected, 'actual=' + normActual);
+    expect(normActual).toBe(normExpected);
 }

@@ -17,3 +17,12 @@
 ## 10:15-11:12
 
 - Convert StateData to State 
+
+## 11:13-13:30
+## 14:00-14:53
+
+- Change to ElementFactory for Platforms
+
+# Tasks
+
+- tsxBuilder convert statePaths to elements 

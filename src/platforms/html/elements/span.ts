@@ -1,23 +1,25 @@
-import { HtmlElementResult, HtmlElementResultBase, Attributes } from './../htmlElementResult';
+import { HtmlTextElementInstance, HtmlElementInstanceBase, ValueAttributes } from './../htmlElementInstance';
 
-export function createSpan(attributes: Attributes, content: any[]): HtmlElementResult<HTMLSpanElement> {
-    // console.log('createSpan START', content);
-    if (content.length > 1) { throw 'label can only have one content item'; }
+export class SpanHtmlElementInstance extends HtmlTextElementInstance<HTMLSpanElement> {
 
-    let dom = document.createElement('span');
-
-    let text = '';
-
-    if (content.length) {
-        text = content[0];
+    constructor(public attributes: ValueAttributes, public text: string) {
+        super();
+        let dom = document.createElement('span');
+        this.domElement = dom;
+        this.update();
     }
 
-    if (attributes) {
-        if (text && attributes['prefix']) { text = attributes['prefix'] + text; }
-        if (text && attributes['suffix']) { text = text + attributes['suffix']; }
+    setAttributes(attributes: ValueAttributes): void { this.attributes = attributes; this.update(); }
+    setText(text: string): void { this.text = text; this.update(); }
+
+    update() {
+        let text = this.text;
+        let attributes = this.attributes;
+        if (attributes) {
+            if (text && attributes['prefix']) { text = attributes['prefix'] + text; }
+            if (text && attributes['suffix']) { text = text + attributes['suffix']; }
+        }
+
+        this.domElement.innerText = text;
     }
-
-    dom.innerText = text;
-
-    return { domElement: dom };
 }

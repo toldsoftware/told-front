@@ -1,4 +1,4 @@
-export class Observable<T> {
+export class SimpleObservable<T> {
 
     private _history: T[] = [];
     public get history() { return this._history.map(x => x); }
@@ -34,7 +34,7 @@ export class Observable<T> {
     }
 }
 
-export class Subject<T> extends Observable<T>{
+export class SimpleSubject<T> extends SimpleObservable<T>{
     constructor(initialValue: T) {
         super(initialValue);
     }
