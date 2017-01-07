@@ -15,23 +15,23 @@ describe('empty label', () => {
 });
 
 describe('label with text', () => {
-    let label: JSX.Element;
+    let label2: JSX.Element;
     beforeEach(() => {
-        label = <label>SOME TEXT</label>;
+        label2 = <label>SOME TEXT</label>;
     });
 
     it('should become span with text', () => {
-        expectHtml(label, '<span>SOME TEXT</span>');
+        expectHtml(label2, '<span>SOME TEXT</span>');
     });
 });
 
 describe('label with text attributes', () => {
-    let label: JSX.Element;
+    let label3: JSX.Element;
     beforeEach(() => {
-        label = <label prefix='BEFORE ' suffix=' AFTER'>SOME TEXT</label>;
+        label3 = <label prefix='BEFORE ' suffix=' AFTER'>SOME TEXT</label>;
     });
 
     it('should become span with prefix and suffix injected', () => {
-        expectHtml(label, '<span>BEFORE SOME TEXT AFTER</span>');
+        expectHtml(label3, '<span>BEFORE SOME TEXT AFTER</span>');
     });
 });
