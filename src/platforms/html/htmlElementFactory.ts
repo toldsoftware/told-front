@@ -2,6 +2,7 @@ import { ElementFactory, ElementInstance, TextElementInstance, ContainerElementI
 import { DivHtmlElementInstance } from './elements/div';
 import { SpanHtmlElementInstance } from './elements/span';
 import { ButtonHtmlElementInstance } from './elements/button';
+import { InputHtmlElementInstance, InputType } from './elements/input';
 
 export class HtmlElementFactory implements ElementFactory {
 
@@ -17,6 +18,8 @@ export class HtmlElementFactory implements ElementFactory {
                 return new SpanHtmlElementInstance(attributes, text);
             case 'button':
                 return new ButtonHtmlElementInstance(attributes, text);
+            case 'textbox':
+                return new InputHtmlElementInstance(attributes, text, InputType.text);
         }
 
         throw `HtmlElementFactory: Unknown Text Element Type: "${name}"`;

@@ -1,4 +1,5 @@
-import { StatePath, StateSpy } from './state';
+import { StatePath, StatePathBase, StateSpy } from './state';
+import { Action2Base } from './actions';
 
 export type ValueAttributes = { [name: string]: string | number | boolean };
 
@@ -6,6 +7,10 @@ export interface ElementInstance {
     setAttributes(attributes: ValueAttributes): void;
     // setVisibility(isVisible: boolean): void;
     setOnClick(callback: () => void): void;
+    setOnTextChange?(callback: (text: string) => void): void;
+
+    setText?(newText: string): void;
+    setActionLabel?(label: string): void;
 }
 
 export interface ContainerElementInstance extends ElementInstance {
@@ -16,6 +21,8 @@ export interface ContainerElementInstance extends ElementInstance {
 
 export interface TextElementInstance extends ElementInstance {
     setText(newText: string): void;
+    setActionLabel?(label: string): void;
+    setOnTextChange?(callback: (text: string) => void): void;
 }
 
 export interface ElementFactory {
@@ -106,7 +113,34 @@ export class TsxBuilder {
 
     private subscribeActions(instance: ElementInstance, content: any) {
         if (content.do) {
-            instance.setOnClick(() => content.do());
+            console.log(`subscribeActions START`);
+
+            let action = content as Action2Base;
+
+            if (instance.setActionLabel) {
+                console.log(`subscribeActions setActionLabel`);
+
+                instance.setActionLabel(action.label);
+            }
+
+            if (instance.setText && action && action.scope && typeof action.scope.value === 'string') {
+                console.log(`subscribeActions setText`);
+
+                (action.scope as StatePathBase).subscribe(x => {
+                    instance.setText(x);
+                });
+                instance.setText(action.scope.value);
+            }
+
+            if (!action.input) {
+                console.log(`subscribeActions setOnClick`);
+
+                instance.setOnClick(() => action.do());
+            } else {
+                if (instance.setOnTextChange) {
+                    instance.setOnTextChange((x) => action.do(x));
+                }
+            }
         }
     }
 }

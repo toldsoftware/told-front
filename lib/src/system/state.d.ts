@@ -16,6 +16,7 @@ export declare class StateSpy {
 }
 export declare function toState<T extends StateData>(stateData: T): State<T>;
 export interface StatePathBase {
+    value: any;
     _fullPath: string;
     subscribe(subscriber: Subscriber<any>): void;
 }

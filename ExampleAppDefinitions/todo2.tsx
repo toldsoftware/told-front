@@ -1,6 +1,7 @@
 // state, actions, filters, markup
 
-namespace Example_Todo1 {
+namespace Example_Todo2 {
+
     // State
     let state = {
         tasks: [
@@ -23,6 +24,23 @@ namespace Example_Todo1 {
     let tasks: { complete: boolean, title?: string }[] = state.tasks;
     let tasks_item = state.tasks[0];
 
+    function action<T>(t: T, actions: (t: T) => any) {
+
+    };
+
+    interface Action2<T> {
+        at(t: T): void;
+        do(t: T): void;
+        pre(t: T): void;
+        nat(t: T): void;
+        post(t: T): void;
+    }
+    function action2<T>(t: T, actions: Action2<T>) {
+
+    };
+
+    let tasksA = { addAction: (params: any) => { } };
+
     // Note: The proxy can learn action type by recording set values
     // Actions
     let actions = {
@@ -33,6 +51,44 @@ namespace Example_Todo1 {
             nat: () => tasks = [{ complete: true }, { complete: true }],
             post: () => tasks = [{ complete: true }, { complete: true }],
         },
+        completeAll_2: {
+            with: () => tasks,
+            at: () => tasks.some(x => !x.complete),
+            do: () => tasks.forEach(x => x.complete = true),
+            pre: () => tasks = [{ complete: false }, { complete: true }],
+            nat: () => tasks = [{ complete: true }, { complete: true }],
+            post: () => tasks = [{ complete: true }, { complete: true }],
+        },
+        completeAll_3: {
+            with: () => tasks,
+            at: (t: typeof tasks) => t.some(x => !x.complete),
+            do: (t: typeof tasks) => t.forEach(x => x.complete = true),
+            pre: (t: typeof tasks) => [{ complete: false }, { complete: true }],
+            nat: (t: typeof tasks) => [{ complete: true }, { complete: true }],
+            post: (t: typeof tasks) => [{ complete: true }, { complete: true }],
+        },
+        completeAll_4: action(state.tasks, t => ({
+            at: () => t.some(x => !x.complete),
+            do: () => t.forEach(x => x.complete = true),
+            pre: () => [{ complete: false }, { complete: true }],
+            nat: () => [{ complete: true }, { complete: true }],
+            post: () => [{ complete: true }, { complete: true }],
+        })),
+        completeAll_5: tasksA.addAction((t: typeof tasks) => ({
+            at: () => t.some(x => !x.complete),
+            do: () => t.forEach(x => x.complete = true),
+            pre: () => [{ complete: false }, { complete: true }],
+            nat: () => [{ complete: true }, { complete: true }],
+            post: () => [{ complete: true }, { complete: true }],
+        })),
+        completeAll_6: action2(state.tasks, {
+            at: (t) => t.some(x => !x.complete),
+            do: (t) => t.forEach(x => x.complete = true),
+            pre: () => [{ complete: false }, { complete: true }],
+            nat: () => [{ complete: true }, { complete: true }],
+            post: () => [{ complete: true }, { complete: true }],
+        }),
+
         resetAll: {
             at: () => tasks.every(x => x.complete),
             do: () => tasks.forEach(x => x.complete = false),

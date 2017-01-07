@@ -17,3 +17,15 @@ export function expectHtml(element: JSX.Element, expected: string) {
     let normActual = actual.replace(/\s+/g, ' ');
     expect(normActual).toBe(normExpected);
 }
+
+export function raiseOnChange(element: HTMLElement) {
+    if ('createEvent' in document) {
+        let evt = document.createEvent('HTMLEvents');
+        evt.initEvent('change', false, true);
+        element.dispatchEvent(evt);
+    }
+    else {
+        (element as any)['fireEvent']('onchange');
+    }
+
+}

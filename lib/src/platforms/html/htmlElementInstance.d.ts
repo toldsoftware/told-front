@@ -15,4 +15,5 @@ export declare abstract class HtmlContainerElementInstance<T extends HTMLElement
 }
 export declare abstract class HtmlTextElementInstance<T extends HTMLElement> extends HtmlElementInstance<T> implements TextElementInstance {
     abstract setText(text: string): void;
+    setOnTextChange(callback: (text: string) => void): void;
 }

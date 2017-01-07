@@ -33,4 +33,24 @@ export abstract class HtmlContainerElementInstance<T extends HTMLElement> extend
 
 export abstract class HtmlTextElementInstance<T extends HTMLElement> extends HtmlElementInstance<T> implements TextElementInstance {
     abstract setText(text: string): void;
+
+    setOnTextChange(callback: (text: string) => void) {
+        console.log(`setOnTextChange`);
+
+        let asInput = (this.domElement as any as HTMLInputElement);
+        // let asTextarea = (this.domElement as any as HTMLTextAreaElement);
+
+        let c = callback;
+
+        // Debounce
+        let call = () => {
+            console.log(`setOnTextChange CALL`, asInput.value);
+
+            c && c(asInput.value);
+            c = null;
+            setTimeout(() => c = callback, 250);
+        };
+
+        asInput.onchange = call;
+    }
 }

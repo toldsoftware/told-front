@@ -39,9 +39,13 @@
 
 - Write Task List
 
-## 19:01-
+## 19:01-19:17
 
 - Debug why Travis is failing, but local test is working
+
+## 22:30-0:47
+
+- Add action with input
 
 # Tasks
 
@@ -62,6 +66,7 @@
 
 ### Actions
 
+- Log Actions
 - Action Targeting Nested Value
 - Action Targeting Nested Value that is Replaced Higher in the Tree
 - Action Targeting Array Items

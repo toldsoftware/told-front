@@ -4,6 +4,9 @@ export declare type ValueAttributes = {
 export interface ElementInstance {
     setAttributes(attributes: ValueAttributes): void;
     setOnClick(callback: () => void): void;
+    setOnTextChange?(callback: (text: string) => void): void;
+    setText?(newText: string): void;
+    setActionLabel?(label: string): void;
 }
 export interface ContainerElementInstance extends ElementInstance {
     replaceChildren(children: ElementInstance[]): void;
@@ -12,6 +15,8 @@ export interface ContainerElementInstance extends ElementInstance {
 }
 export interface TextElementInstance extends ElementInstance {
     setText(newText: string): void;
+    setActionLabel?(label: string): void;
+    setOnTextChange?(callback: (text: string) => void): void;
 }
 export interface ElementFactory {
     createTextElement(name: string, attributes: ValueAttributes, text: string): TextElementInstance;

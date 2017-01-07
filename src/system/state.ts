@@ -60,6 +60,7 @@ function toStateInner<T extends StateData>(stateData: T, path: string, pathValue
 }
 
 export interface StatePathBase {
+    value: any;
     _fullPath: string;
     subscribe(subscriber: Subscriber<any>): void;
 }

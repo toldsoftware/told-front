@@ -5,5 +5,6 @@ export declare class ButtonHtmlElementInstance extends HtmlTextElementInstance<H
     constructor(attributes: ValueAttributes, text: string);
     setAttributes(attributes: ValueAttributes): void;
     setText(text: string): void;
+    setActionLabel(text: string): void;
     update(): void;
 }
