@@ -5,6 +5,20 @@ export { ValueAttributes };
 export abstract class HtmlElementInstanceBase implements ElementInstance {
     domElement: HTMLElement;
     abstract setAttributes(attributes: ValueAttributes): void;
+
+    setOnClick(callback: () => void) {
+        let c = callback;
+
+        // Debounce
+        let call = () => {
+            c && c();
+            c = null;
+            setTimeout(() => c = callback, 250);
+        };
+
+        this.domElement.onclick = call;
+        this.domElement.ontouchstart = call;
+    }
 }
 
 export abstract class HtmlElementInstance<T extends HTMLElement> extends HtmlElementInstanceBase {

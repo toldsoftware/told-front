@@ -3,6 +3,7 @@ export declare type ValueAttributes = {
 };
 export interface ElementInstance {
     setAttributes(attributes: ValueAttributes): void;
+    setOnClick(callback: () => void): void;
 }
 export interface ContainerElementInstance extends ElementInstance {
     replaceChildren(children: ElementInstance[]): void;
@@ -24,10 +25,12 @@ export declare class TsxBuilder {
     private createContainerElement(name, attributes, content);
     private createTextElement(name, attributes, content);
     private createEmptyElement(name, attributes);
+    private subscribeActions(instance, content);
 }
 export declare class TsxElement implements JSX.Element {
     elementInstance: ElementInstance;
 }
 export declare class ContainerTsxElement extends TsxElement {
     elementInstance: ContainerElementInstance;
+    children: TsxElement[];
 }

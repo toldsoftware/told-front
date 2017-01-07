@@ -2,7 +2,6 @@ import { SimpleSubject } from './simpleObservable';
 export interface StateData {
     [name: string]: StateData | string | boolean | number;
 }
-import { StateData } from './state';
 export declare type State<T> = {
     [P in keyof T]: State<T[P]> & StatePath<T[P]>;
 };
@@ -25,5 +24,5 @@ export declare class StatePath<T> extends SimpleSubject<T> implements StatePathB
     _fullPath: string;
     constructor(_key: string, _initialValue: T, _fullPath: string);
     emit(newValue: T): void;
-    readonly value: T;
+    value: T;
 }

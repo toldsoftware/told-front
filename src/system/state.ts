@@ -4,8 +4,6 @@ export interface StateData {
     [name: string]: StateData | string | boolean | number;
 }
 
-import { StateData } from './state';
-
 export type State<T> = {
 [P in keyof T]: State<T[P]> & StatePath<T[P]>;
 };
@@ -87,5 +85,9 @@ export class StatePath<T> extends SimpleSubject<T> implements StatePathBase {
     get value() {
         StateSpy.Instance.notify_getValue(this);
         return this._value;
+    }
+
+    set value(v: T) {
+        this.emit(v);
     }
 }

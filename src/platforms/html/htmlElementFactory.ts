@@ -1,6 +1,7 @@
 import { ElementFactory, ElementInstance, TextElementInstance, ContainerElementInstance, ValueAttributes } from './../../system';
 import { DivHtmlElementInstance } from './elements/div';
 import { SpanHtmlElementInstance } from './elements/span';
+import { ButtonHtmlElementInstance } from './elements/button';
 
 export class HtmlElementFactory implements ElementFactory {
 
@@ -14,9 +15,11 @@ export class HtmlElementFactory implements ElementFactory {
         switch (name) {
             case 'label':
                 return new SpanHtmlElementInstance(attributes, text);
+            case 'button':
+                return new ButtonHtmlElementInstance(attributes, text);
         }
 
-        throw `Unknown Text Element Type: "${name}"`;
+        throw `HtmlElementFactory: Unknown Text Element Type: "${name}"`;
     }
 
     createContainerElement(name: string, attributes: ValueAttributes, children: ElementInstance[]): ContainerElementInstance {
@@ -27,6 +30,6 @@ export class HtmlElementFactory implements ElementFactory {
                 return new DivHtmlElementInstance(attributes, children);
         }
 
-        throw `Unknown Container Element Type: "${name}" children=${children}`;
+        throw `HtmlElementFactory: Unknown Container Element Type: "${name}" children=${children}`;
     }
 }

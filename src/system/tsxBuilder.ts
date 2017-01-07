@@ -5,6 +5,7 @@ export type ValueAttributes = { [name: string]: string | number | boolean };
 export interface ElementInstance {
     setAttributes(attributes: ValueAttributes): void;
     // setVisibility(isVisible: boolean): void;
+    setOnClick(callback: () => void): void;
 }
 
 export interface ContainerElementInstance extends ElementInstance {
@@ -47,14 +48,16 @@ export class TsxBuilder {
             return this.createEmptyElement(name, attributes);
         }
 
-        throw `Unknown Content: "${content}"`;
+        throw `TsxBuilder: Unknown Content: "${content}"`;
     }
 
-    private createContainerElement(name: string, attributes: BuilderAttributes, content: TsxElement[]): TsxElement {
+    private createContainerElement(name: string, attributes: BuilderAttributes, content: TsxElement[]): ContainerTsxElement {
         // console.log('TsxBuilder.createContainerElement START', name, attributes, content);
 
         let instance = TsxBuilder.factory.createContainerElement(name, attributes, content.map(x => x.elementInstance));
-        return { elementInstance: instance };
+
+        this.subscribeActions(instance, content);
+        return { elementInstance: instance, children: content };
     }
 
     private createTextElement(name: string, attributes: BuilderAttributes, content: any): TsxElement {
@@ -69,9 +72,15 @@ export class TsxBuilder {
             });
         } else if (typeof content === 'string') {
             // console.log('TsxBuilder.createTextElement STRING', content);
+
         } else if (typeof content === 'function') {
             console.log('TsxBuilder.createTextElement FUNCTION', content);
             text = autoSubscribe<string>(content, x => instance.setText(x));
+
+        } else if (content.label) {
+            console.log('TsxBuilder.createTextElement LABEL', content);
+            text = content.label;
+
         } else {
             console.log('TsxBuilder.createTextElement UNKNOWN', content);
         }
@@ -80,6 +89,7 @@ export class TsxBuilder {
         console.log('valueAttributes=', valueAttributes);
         let instance = TsxBuilder.factory.createTextElement(name, valueAttributes, text);
 
+        this.subscribeActions(instance, content);
         return { elementInstance: instance };
     }
 
@@ -91,7 +101,13 @@ export class TsxBuilder {
                 return this.createTextElement(name, attributes, []);
         }
 
-        throw `Unknown Empty Element Name: "${name}"`;
+        throw `TsxBuilder: Unknown Empty Element Name: "${name}"`;
+    }
+
+    private subscribeActions(instance: ElementInstance, content: any) {
+        if (content.do) {
+            instance.setOnClick(() => content.do());
+        }
     }
 }
 
@@ -101,6 +117,7 @@ export class TsxElement implements JSX.Element {
 
 export class ContainerTsxElement extends TsxElement {
     elementInstance: ContainerElementInstance;
+    children: TsxElement[];
 }
 
 function autoSubscribe<T>(valueOrMethod: T | (() => T), setValue: (t: T) => void): T {

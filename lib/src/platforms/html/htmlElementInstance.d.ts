@@ -3,6 +3,7 @@ export { ValueAttributes };
 export declare abstract class HtmlElementInstanceBase implements ElementInstance {
     domElement: HTMLElement;
     abstract setAttributes(attributes: ValueAttributes): void;
+    setOnClick(callback: () => void): void;
 }
 export declare abstract class HtmlElementInstance<T extends HTMLElement> extends HtmlElementInstanceBase {
     domElement: T;
