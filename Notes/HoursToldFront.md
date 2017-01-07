@@ -35,10 +35,36 @@
 
 - Add Action with Button
 
-##
+## 18:34-19:00
 
-- Debug why Travis is failing, but local test is working
+- Write Task List
 
 # Tasks
 
-- tsxBuilder convert statePaths to elements 
+- Debug why Travis is failing, but local test is working
+
+## Features
+
+
+### State
+
+- Support Dynamic Children in State Tree
+	- Added Value (Where it didn't exist before - CREATE)
+	- Null Value (Where id did exist before - REMOVE)
+	- Array Length Changed (CREATE/REMOVE)
+
+- ?Calculated Values in State
+
+
+### Actions
+
+- Action Targeting Nested Value
+- Action Targeting Nested Value that is Replaced Higher in the Tree
+- Action Targeting Array Items
+- Action Unit Testing
+
+### Arrays 
+
+- Array Iteration in Markup
+- Modifying Array Content with Actions
+- Array Modification Changes only Single Items
