@@ -35,6 +35,10 @@
 
 - Add Action with Button
 
+##
+
+- Debug why Travis is failing, but local test is working
+
 # Tasks
 
 - tsxBuilder convert statePaths to elements 
