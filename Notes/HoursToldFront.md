@@ -47,8 +47,21 @@
 
 - Add action with input
 
-# Tasks
+## 0:48-1:22
 
+- START Array
+
+# 2017-01-07
+
+## 9:00-10:12
+
+- Finish Defining Array Expressions
+
+##
+
+- Cleanup Actions
+
+# Tasks
 
 
 ## Features

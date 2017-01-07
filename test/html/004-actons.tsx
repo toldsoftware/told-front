@@ -8,8 +8,6 @@ describe('actions with button', () => {
     let stateData = { text: 'SOME TEXT' };
     let state = toState(stateData);
 
-    let text = state.text;
-
     let actionsRaw = {
         changeText: action(state.text, {
             do: (t) => t.value = 'NEW TEXT',

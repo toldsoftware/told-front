@@ -1,12 +1,17 @@
 import { SimpleSubject } from './simpleObservable';
 
 export interface StateData {
-    [name: string]: StateData | string | boolean | number;
+    [name: string]: StateData[] | StateData | string | boolean | number;
 }
 
 export type State<T> = {
 [P in keyof T]: State<T[P]> & StatePath<T[P]>;
 };
+
+// export type StateArray<T, U> = {
+// [P in keyof T]: State<T[P]> & StatePath<T[P]> & StatePathArray<U>;
+// }
+
 
 export type SpySubscriber = (statePath: StatePathBase) => void;
 
@@ -91,4 +96,20 @@ export class StatePath<T> extends SimpleSubject<T> implements StatePathBase {
     set value(v: T) {
         this.emit(v);
     }
+
+    // For Arrays
+    // get 0(): any { throw ''; }
+    // forEach(callback: (x: any) => void): void {
+    //     throw 'Not Implemented';
+    // }
 }
+
+// export class StatePathArray<T>{
+//     // For Arrays
+//     // get 0(): any { throw ''; }
+//     // forEach(callback: (x: any) => void): void {
+//     //     throw 'Not Implemented';
+//     // }
+
+//     onlyArrays: number;
+// }
