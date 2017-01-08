@@ -1,5 +1,2 @@
-export declare let DELETE: any;
-export interface StateSnapshot {
-    [name: string]: StateSnapshot[] | StateSnapshot | string | boolean | number;
-}
-export declare function mergeChanges<T extends StateSnapshot>(changes: T[]): T;
+import { StateData } from './stateData';
+export declare function mergeChanges<T extends StateData>(changes: T[]): T;

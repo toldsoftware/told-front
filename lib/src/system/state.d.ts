@@ -1,7 +1,5 @@
+import { StateData } from './stateStorage';
 import { SimpleSubject } from './simpleObservable';
-export interface StateData {
-    [name: string]: StateData[] | StateData | string | boolean | number;
-}
 export declare type State<T> = {
     [P in keyof T]: State<T[P]> & StatePath<T[P]>;
 };
