@@ -1,4 +1,4 @@
-import { TsxBuilder, TsxElement, ContainerTsxElement, toState, action, actionWithInput, actionArray, actionArrayItems, toActions2, foreachItem } from './../../src';
+import { TsxBuilder, TsxElement, ContainerTsxElement, toState, action, actionWithInput, actionArray, actionArrayItems, toActions2, items } from './../../src';
 import { HtmlElementInstance } from './../../src/platforms/html/htmlElementInstance';
 import { initPlatform, expectHtml, raiseOnChange } from './0-helpers';
 
@@ -40,10 +40,11 @@ describe('arrays', () => {
 
     let content =
         <wrap>
-            {foreachItem(state.tasks, item =>
+            {items(state.tasks, item =>
                 <wrap>
                     <button>{actions.completeTask}</button>
                     <label>{item.title}</label>
+                    <button>{actions.deleteTask}</button>
                 </wrap>
             )}
         </wrap>;

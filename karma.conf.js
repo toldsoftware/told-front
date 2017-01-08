@@ -7,7 +7,7 @@ module.exports = function (config) {
       'src/**/*.ts',
       'src/**/*.tsx',
       'test/**/*.ts',
-      'test/**/*.tsx',
+      // 'test/**/*.tsx',
     ],
 
     preprocessors: {

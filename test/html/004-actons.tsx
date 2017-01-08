@@ -64,6 +64,9 @@ describe('actions with textbox', () => {
             <textbox>{actions.changeText}</textbox>
         </wrap>;
 
+    // NOTE: Input to dom html does not include closing tag or .value (value attribute is used for initial value not current value)
+    // - input dom has no closing tag
+    // - input.value has to be checked separately
     let input_textbox = ((content as ContainerTsxElement).children[1].elementInstance as HtmlElementInstance<HTMLInputElement>).domElement;
 
     it('should become correct content', () => {

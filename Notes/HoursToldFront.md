@@ -57,9 +57,17 @@
 
 - Finish Defining Array Expressions
 
+## 20:00-22:10
+
+- StateStorage
+
 ##
 
+- Implement Arrays
 - Cleanup Actions
+- Cleanup State
+- Cleanup Arrays
+
 
 # Tasks
 
@@ -90,3 +98,83 @@
 - Array Iteration in Markup
 - Modifying Array Content with Actions
 - Array Modification Changes only Single Items
+
+
+### State Persistence
+
+- Persist State Changes 
+	- Serialized Action Result
+		- Absoulte State Tree Change Json
+		- External Request/Response
+		- Action Metadata
+			- Version Number
+			- ActionName
+			- Target (StatePath)
+			- Input
+			- UserCredentials
+				- Authorization
+				- Access Point (Device, IP, etc.)
+			- Time
+- Reconstitute State @ Any Time
+- State Changes can be reconstructed on Server
+	- in proper order by time 
+	- verify Credentials
+	- use Action Metadata
+		- Version Number
+		- ActionName
+		- Target
+		- Input
+	- compare to client-side results
+	
+### State Loading (Hot and Cold State)
+
+- Hot State
+	- State that has been reconstituted and is available on the client
+- Cold State
+	- State that is persisted in storage and must be requested
+	- Loading is Automated
+		- Loading Indicator at UI placeholder
+		- Retry Button on load fail
+	- Placeholders are in the correct structure of the tree
+	- Paging Placeholders for Arrays
+
+### State Versioning
+
+- Upgrade/Downgrade state transformations
+- Keep Supported Model Versions in runtime for server-side state execution 
+- Support Mixed Client Versions?
+	- Use State Transformations on State Changes
+		
+
+### Shared State
+
+- Owner can create a State Tree
+- Owner can grant view permissions at any branch
+	- Include Branch
+	- Exclude Branch
+- Owner can grant action permissions at any branch
+	- Allow Action at Node
+	- Prevent Action at Node
+
+#### Examples
+
+##### Game Session
+
+- Owner is Host
+- Grants View Permission to All Players
+- Create Branch for Each Player with Edit Permissions
+- Grants Game Action Permissions to All Players
+
+##### Slither.io type game
+
+- Tree is Single Game Session (Entire World)
+- Each Player can only run UpdateLocation and AteFood Actions
+	- Append Location Update to multiple WorldSegmentBranches
+		- WorldSegmentBranches are 2 screen size that overlap 1 screen
+		- 4 Segments should be updated for each update
+- Server Verifies UpdateLocation and AteFood validity
+	- Or Verification could be distributed among clients
+
+##### Preventing Game Cheating
+
+- Don't share opponents moves with player until player commits own move at that time point 

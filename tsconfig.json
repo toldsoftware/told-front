@@ -13,7 +13,7 @@
         "jsx": "react",
         "reactNamespace": "TsxBuilder",
         "lib": [
-            "dom", "es5"
+            "dom", "es5", "es2015.promise"
         ]
     },
     "exclude": [
