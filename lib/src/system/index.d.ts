@@ -3,3 +3,4 @@ export * from './state';
 export * from './actions';
 export * from './arrays';
 export * from './stateStorage';
+export * from './async';

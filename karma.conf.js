@@ -6,7 +6,7 @@ module.exports = function (config) {
     files: [
       'src/**/*.ts',
       'src/**/*.tsx',
-      'test/**/*.ts',
+      // 'test/**/*.ts',
       // 'test/**/*.tsx',
     ],
 

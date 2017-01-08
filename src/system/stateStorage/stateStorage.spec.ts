@@ -1,5 +1,5 @@
-import { MemoryStateStorage, SyncStateStorage, CachedSyncStateStorage } from './../../src';
-import { delay } from './../../src';
+import { MemoryStateStorage, SyncStateStorage, CachedSyncStateStorage } from './';
+import { delay } from './../';
 
 describe('MemoryStateStorage', () => {
     it('should store and retrieve state', async (done) => {

@@ -25,3 +25,11 @@ export declare class SyncStateStorage implements StateStorage {
     appendStateChange(...stateChanges: string[]): Promise<void>;
     sync(): Promise<void>;
 }
+export declare class CachedSyncStateStorage extends SyncStateStorage {
+    cache_initial: string[];
+    cache_appended: string[];
+    constructor(provider: StateStorage, delayTime?: number);
+    setup(): Promise<void>;
+    getStateChanges(): Promise<string[]>;
+    appendStateChange(...stateChanges: string[]): Promise<void>;
+}

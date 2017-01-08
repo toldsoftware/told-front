@@ -61,6 +61,10 @@
 
 - StateStorage
 
+## 22:11-22:56
+
+- StateSnapshot
+
 ##
 
 - Implement Arrays
